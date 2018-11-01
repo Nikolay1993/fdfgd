@@ -1,10 +1,19 @@
 <?php foreach ($this->getCollectionTb() as $item):?>
 <table border="1">
     <tr>
-        <th width="150">Имя: <? echo $item->getName()?></th>
-        <th width="200">Вопрос: <? echo $item->getQuestion()?></th>
-        <th width="200">Ответ: <? echo $item->getAnswer()?></th>
-        <th width="200">Дата: <? echo $item->getCreated()?></th>
+        <th width="150" style="padding: 10px">Имя: <? echo $item->getName()?></th>
+        <th width="200" style="padding: 10px">Вопрос: <? echo $item->getQuestion()?></th>
+        <th width="200" style="padding: 10px">Ответ: <? echo $item->getAnswer()?></th>
+        <th width="200" style="padding: 10px">Дата: <? echo $item->getCreated()?></th>
     </tr>
 </table>
 <?php endforeach; ?>
+
+
+<form action="<?php echo Mage::getUrl('faq/index/save') ?>" method="post">
+    <p>Ваше имя: <input style="margin: 25px" type="text" name="name" /></p>
+    <p>Ваш вопрос: <input  style="margin: 10px" type="text" name="question" /></p>
+    <p><input type="submit" value="Отправить"/></p>
+</form>
+
+
