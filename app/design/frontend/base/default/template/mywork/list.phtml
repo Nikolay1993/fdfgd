@@ -1,1 +1,10 @@
-<h1>Template</h1>
+<?php foreach ($this->getCollectionTb() as $item):?>
+<table border="1">
+    <tr>
+        <th width="150">Имя: <? echo $item->getName()?></th>
+        <th width="200">Вопрос: <? echo $item->getQuestion()?></th>
+        <th width="200">Ответ: <? echo $item->getAnswer()?></th>
+        <th width="200">Дата: <? echo $item->getCreated()?></th>
+    </tr>
+</table>
+<?php endforeach; ?>

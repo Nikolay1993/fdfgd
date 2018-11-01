@@ -8,7 +8,7 @@
     <frontend>
         <layout>
             <updates>
-                <mywork>
+                <mywork module="mywork">
                     <file>mywork.xml</file>
                 </mywork>
             </updates>
