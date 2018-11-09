@@ -26,11 +26,13 @@
  */
 -->
 <config>
+
     <modules>
         <Mage_Contacts>
-            <version>1.6.0.0</version>
+            <version>1.7.0.0</version>
         </Mage_Contacts>
     </modules>
+
     <frontend>
         <routers>
             <contacts>
@@ -58,7 +60,22 @@
             </updates>
         </layout>
     </frontend>
+
     <global>
+        <models>
+            <contacts>
+                <class>Mage_Contacts_Model</class>
+                <resourceModel>contacts_resource</resourceModel>
+            </contacts>
+            <contacts_resource>
+                <class>Mage_Contacts_Model_Resource</class>
+                <entities>
+                    <table_contacts>
+                        <table>mage_contacts_entities</table>
+                    </table_contacts>
+                </entities>
+            </contacts_resource>
+        </models>
         <resources>
             <contacts_setup>
                 <setup>
@@ -75,7 +92,29 @@
                 </contacts_email_email_template>
             </email>
         </template>
+        <helpers>
+            <contacts>
+                <class>Mage_Contacts_Helper</class>
+            </contacts>
+        </helpers>
+        <blocks>
+            <contacts>
+                <class>Mage_Contacts_Block</class>
+            </contacts>
+        </blocks>
     </global>
+
+    <admin>
+        <routers>
+            <contacts_admin>
+                <use>admin</use>
+                <args>
+                    <module>Mage_Contacts</module>
+                    <frontName>contacts_admin</frontName>
+                </args>
+            </contacts_admin>
+        </routers>
+    </admin>
 
     <adminhtml>
         <translate>
@@ -87,6 +126,13 @@
                 </Mage_Contacts>
             </modules>
         </translate>
+        <menu>
+            <contacts module="contacts">
+                <title>Contacts</title>
+                <sort_order>77</sort_order>
+                <action>contacts_admin/adminhtml_contacts</action>
+            </contacts>
+        </menu>
     </adminhtml>
 
     <default>

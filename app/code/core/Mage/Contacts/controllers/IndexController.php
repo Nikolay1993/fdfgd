@@ -59,71 +59,105 @@ class Mage_Contacts_IndexController extends Mage_Core_Controller_Front_Action
         $this->renderLayout();
     }
 
-    public function postAction()
+//    public function postAction()
+//    {
+//        $post = $this->getRequest()->getPost();
+//        if ( $post ) {
+//            $translate = Mage::getSingleton('core/translate');
+//            /* @var $translate Mage_Core_Model_Translate */
+//            $translate->setTranslateInline(false);
+//            try {
+//                $postObject = new Varien_Object();
+//                $postObject->setData($post);
+//
+//                $error = false;
+//
+//                if (!Zend_Validate::is(trim($post['name']) , 'NotEmpty')) {
+//                    $error = true;
+//                }
+//
+//                if (!Zend_Validate::is(trim($post['comment']) , 'NotEmpty')) {
+//                    $error = true;
+//                }
+//
+//                if (!Zend_Validate::is(trim($post['email']), 'EmailAddress')) {
+//                    $error = true;
+//                }
+//
+//                if (Zend_Validate::is(trim($post['hideit']), 'NotEmpty')) {
+//                    $error = true;
+//                }
+//
+//                if ($error) {
+//                    throw new Exception();
+//                }
+//                $mailTemplate = Mage::getModel('core/email_template');
+//                /* @var $mailTemplate Mage_Core_Model_Email_Template */
+//                $mailTemplate->setDesignConfig(array('area' => 'frontend'))
+//                    ->setReplyTo($post['email'])
+//                    ->sendTransactional(
+//                        Mage::getStoreConfig(self::XML_PATH_EMAIL_TEMPLATE),
+//                        Mage::getStoreConfig(self::XML_PATH_EMAIL_SENDER),
+//                        Mage::getStoreConfig(self::XML_PATH_EMAIL_RECIPIENT),
+//                        null,
+//                        array('data' => $postObject)
+//                    );
+//
+//                if (!$mailTemplate->getSentSuccess()) {
+//                    throw new Exception();
+//                }
+//
+//                $translate->setTranslateInline(true);
+//
+//                Mage::getSingleton('customer/session')->addSuccess(Mage::helper('contacts')->__('Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.'));
+//                $this->_redirect('*/*/');
+//
+//                return;
+//            } catch (Exception $e) {
+//                $translate->setTranslateInline(true);
+//
+//                Mage::getSingleton('customer/session')->addError(Mage::helper('contacts')->__('Unable to submit your request. Please, try again later'));
+//                $this->_redirect('*/*/');
+//                return;
+//            }
+//
+//        } else {
+//            $this->_redirect('*/*/');
+//        }
+//    }
+
+
+    public function saveAction()
     {
-        $post = $this->getRequest()->getPost();
-        if ( $post ) {
-            $translate = Mage::getSingleton('core/translate');
-            /* @var $translate Mage_Core_Model_Translate */
-            $translate->setTranslateInline(false);
-            try {
-                $postObject = new Varien_Object();
-                $postObject->setData($post);
+        $select_gender = $this->getRequest()->getPost('select_gender');
+        $name = $this->getRequest()->getPost('name');
+        $email = $this->getRequest()->getPost('email');
+        $telephone = $this->getRequest()->getPost('telephone');
+        $comment = $this->getRequest()->getPost('comment');
+        $learned = $this->getRequest()->getPost('learned');
 
-                $error = false;
+            $model = Mage::getModel('contacts/contacts');
+            $model->setGender($select_gender);
+            $model->setName($name);
+            $model->setEmail($email);
+            $model->setTelephone($telephone);
+            $model->setComment($comment);
+            $model->setLearned($learned);
+            $model->getCreated(date("F j, Y, H:i:s"));
+            $model->getStatus(Mage_Contacts_Model_Source_Status::NEW_STATUS);
+            $model->getNotified(Mage_Contacts_Model_Source_Status::NO);
 
-                if (!Zend_Validate::is(trim($post['name']) , 'NotEmpty')) {
-                    $error = true;
-                }
 
-                if (!Zend_Validate::is(trim($post['comment']) , 'NotEmpty')) {
-                    $error = true;
-                }
-
-                if (!Zend_Validate::is(trim($post['email']), 'EmailAddress')) {
-                    $error = true;
-                }
-
-                if (Zend_Validate::is(trim($post['hideit']), 'NotEmpty')) {
-                    $error = true;
-                }
-
-                if ($error) {
-                    throw new Exception();
-                }
-                $mailTemplate = Mage::getModel('core/email_template');
-                /* @var $mailTemplate Mage_Core_Model_Email_Template */
-                $mailTemplate->setDesignConfig(array('area' => 'frontend'))
-                    ->setReplyTo($post['email'])
-                    ->sendTransactional(
-                        Mage::getStoreConfig(self::XML_PATH_EMAIL_TEMPLATE),
-                        Mage::getStoreConfig(self::XML_PATH_EMAIL_SENDER),
-                        Mage::getStoreConfig(self::XML_PATH_EMAIL_RECIPIENT),
-                        null,
-                        array('data' => $postObject)
-                    );
-
-                if (!$mailTemplate->getSentSuccess()) {
-                    throw new Exception();
-                }
-
-                $translate->setTranslateInline(true);
-
-                Mage::getSingleton('customer/session')->addSuccess(Mage::helper('contacts')->__('Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.'));
-                $this->_redirect('*/*/');
-
-                return;
-            } catch (Exception $e) {
-                $translate->setTranslateInline(true);
-
-                Mage::getSingleton('customer/session')->addError(Mage::helper('contacts')->__('Unable to submit your request. Please, try again later'));
-                $this->_redirect('*/*/');
-                return;
+            if($model->save() == true){
+                Mage::getSingleton('core/session')->addSuccess('massage successful');
+            }
+            if($model->save() != true){
+                Mage::getSingleton('core/session')->addError('error input');
             }
 
-        } else {
-            $this->_redirect('*/*/');
-        }
-    }
+        $this->_redirect('contacts/index/index');
 
+
+
+    }
 }
