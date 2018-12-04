@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<layout>
+    <contacts_index_index>
+        <reference name="content">
+            <block type="newwork/list" name="newwork.list" template="newwork/list.phtml" />
+        </reference>
+    </contacts_index_index>
+</layout>

@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <layout>
-    <mywork_index_index>
-        <reference name="content">
-            <block type="mywork/list" name="mywork.list" template="mywork/list.phtml" />
-        </reference>
-    </mywork_index_index>
+<mywork_index_index>
+    <reference name="content">
+        <block type="mywork/list" name="mywork.list" template="mywork/list.phtml" />
+    </reference>
+</mywork_index_index>
 </layout>

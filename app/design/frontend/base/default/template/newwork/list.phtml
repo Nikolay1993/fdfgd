@@ -1,0 +1,19 @@
+<?php
+$emails = Mage::helper('contacts')->getContactEmails();
+?>
+<!-- Other markup →
+
+<!-- Other form fields -->
+
+<div class="field">
+    <label for="department"><?php echo Mage::helper('contacts')->__('Department') ?></label>
+    <div class="input-box">
+        <select name="department" id="department" class="input-select validate-select">
+            <option value="">Select Department</option>
+            <?php foreach($emails as $email): ?>
+                <option value="<?php echo $email['email'] ?>"><?php echo $email['name'] ?></option>
+            <?php endforeach ?>
+        </select>
+    </div>
+</div>
+<!-- Other form fields →
